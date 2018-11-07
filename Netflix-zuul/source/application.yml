@@ -1,0 +1,27 @@
+spring:
+    #应用唯一标识
+    application:
+        name: gateway-zuul
+server:
+    port: 9999
+    tomcat:
+        uri-encoding: UTF-8
+# 安全认证的配置  
+security:  
+  basic:  
+    enabled: true  
+  user:  
+    name: admin  # 用户名  
+    password: 111   # 用户密码  
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${security.user.name}:${security.user.password}@localhost:8761/eureka/
+zuul:
+  routes:
+    api-a:
+      path: /consumer/resttemplate/**
+      serviceId: client-cfy
+    api-b:
+      path: /consumer/feign/**
+      serviceId: consumer-feign
